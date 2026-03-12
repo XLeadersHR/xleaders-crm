@@ -16,7 +16,6 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
 .top-bar h1{color:#fff;font-size:15px;font-weight:600}
 .top-bar h1 span{color:var(--gold)}
 .top-bar .actions{display:flex;gap:8px;align-items:center}
-.records-count{font-size:11px;color:rgba(255,255,255,.6)}
 
 .btn{padding:8px 18px;border:none;border-radius:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
@@ -28,19 +27,33 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 
 .container{max-width:960px;margin:0 auto;padding:20px 20px 60px}
+
+/* ── SUCCESS BANNER ── */
+.save-banner{background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border:1.5px solid var(--success);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:none;align-items:center;gap:12px;animation:slideDown .3s ease}
+.save-banner.show{display:flex}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.save-banner .icon{font-size:28px;flex-shrink:0}
+.save-banner .info{flex:1}
+.save-banner .info .title{font-size:13px;font-weight:700;color:#065F46}
+.save-banner .info .detail{font-size:11px;color:#047857;margin-top:2px}
+.save-banner .close{background:none;border:none;font-size:18px;color:#065F46;cursor:pointer;padding:4px}
+
+/* ── STATS ── */
 .stats-bar{display:flex;gap:10px;margin-bottom:18px}
 .stat-card{flex:1;background:var(--card);border-radius:10px;padding:11px 14px;border:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .stat-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
-.stat-icon.red{background:rgba(194,38,32,.1)}.stat-icon.gold{background:rgba(212,175,55,.1)}.stat-icon.navy{background:rgba(27,42,74,.1)}.stat-icon.green{background:rgba(16,185,129,.1)}
+.stat-icon.red{background:rgba(194,38,32,.1)}.stat-icon.gold{background:rgba(212,175,55,.1)}.stat-icon.green{background:rgba(16,185,129,.1)}
 .stat-value{font-size:19px;font-weight:700;color:var(--navy)}
 .stat-label{font-size:9px;color:var(--text-light);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
 
+/* ── FORM SECTIONS ── */
 .form-section{background:var(--card);border-radius:12px;border:1px solid var(--border);margin-bottom:12px;overflow:hidden}
 .section-header{padding:11px 16px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;transition:background .15s}
 .section-header:hover{background:#F9FAFB}
 .section-tag{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#fff}
 .section-tag.meta{background:var(--navy)}.section-tag.demo{background:#3B82F6}.section-tag.firm{background:#8B5CF6}.section-tag.geo{background:#10B981}.section-tag.course{background:var(--red)}.section-tag.lead{background:var(--gold);color:var(--navy)}.section-tag.pain{background:#F97316}.section-tag.action{background:#06B6D4}.section-tag.history{background:#6366F1}
 .section-title{font-size:13px;font-weight:600;flex:1}
+.section-badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;min-width:20px;text-align:center}
 .section-chevron{font-size:11px;color:var(--text-light);transition:transform .2s}
 .section-header.collapsed .section-chevron{transform:rotate(-90deg)}
 .section-body{padding:0 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:11px 16px}
@@ -60,24 +73,28 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
 .check-tag:hover{border-color:var(--navy)}
 .check-tag.selected{background:var(--navy);color:#fff;border-color:var(--navy)}
 
+/* ── HISTORY TABLE ── */
 .history-body{padding:0 16px 16px;display:block}
 .history-body.collapsed{display:none}
 .history-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .history-toolbar input{padding:6px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:11px;flex:1;min-width:180px;outline:none}
 .history-toolbar input:focus{border-color:var(--navy)}
-.history-toolbar .count{font-size:11px;color:var(--text-light)}
-.history-loading{text-align:center;padding:20px;color:var(--text-light);font-size:12px}
+.history-toolbar .count{font-size:11px;color:var(--text-light);font-weight:600}
 .history-empty{text-align:center;padding:30px;color:var(--text-light);font-size:12px}
+.history-loading{text-align:center;padding:20px;color:var(--text-light);font-size:12px}
 
 .htable{width:100%;border-collapse:collapse;font-size:11px}
 .htable th{background:#F3F4F6;padding:7px 8px;text-align:left;font-weight:600;font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:.3px;position:sticky;top:0;border-bottom:2px solid var(--border)}
 .htable td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:top;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .htable tr:hover td{background:#F9FAFB}
-.htable .lead-tag{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600}
+.htable tr.new-row td{background:#ECFDF5;animation:highlightRow 2s ease}
+@keyframes highlightRow{0%{background:#A7F3D0}100%{background:#ECFDF5}}
+.lead-tag{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600}
 .lead-C1{background:#DBEAFE;color:#1E40AF}.lead-C2{background:#FEF3C7;color:#92400E}.lead-C3{background:#D1FAE5;color:#065F46}.lead-C4{background:#FCE7F3;color:#9D174D}
-.htable-wrap{max-height:400px;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
+.htable-wrap{max-height:420px;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
 
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);padding:11px 22px;border-radius:10px;font-size:12px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:999;color:#fff}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);padding:12px 24px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:999;color:#fff;max-width:90vw}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.success{background:var(--success)}.toast.error{background:var(--red)}.toast.info{background:var(--navy)}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
@@ -90,7 +107,6 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
 <div class="top-bar">
   <div class="logo"><div class="logo-icon">XL</div><h1><span>XLeaders</span> — Nhập liệu khách hàng</h1></div>
   <div class="actions">
-    <span class="records-count" id="recordCount"></span>
     <button class="btn btn-outline" onclick="resetForm()">↻ Làm mới</button>
     <button class="btn btn-gold" id="btnSave" onclick="saveRecord()">✓ Lưu bản ghi</button>
     <button class="btn btn-red" onclick="exportLocalExcel()">⬇ Excel backup</button>
@@ -98,13 +114,25 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
 </div>
 
 <div class="container">
-  <div class="stats-bar">
-    <div class="stat-card"><div class="stat-icon red">📋</div><div><div class="stat-value" id="statTotal">0</div><div class="stat-label">Phiên này</div></div></div>
-    <div class="stat-card"><div class="stat-icon green">☁️</div><div><div class="stat-value" id="statCloud">✓</div><div class="stat-label">Google Sheets</div></div></div>
-    <div class="stat-card"><div class="stat-icon gold">🔥</div><div><div class="stat-value" id="statHot">0</div><div class="stat-label">Lead nóng</div></div></div>
+
+  <!-- SUCCESS BANNER -->
+  <div class="save-banner" id="saveBanner">
+    <div class="icon">✅</div>
+    <div class="info">
+      <div class="title" id="bannerTitle">Đã lưu thành công!</div>
+      <div class="detail" id="bannerDetail"></div>
+    </div>
+    <button class="close" onclick="document.getElementById('saveBanner').classList.remove('show')">&times;</button>
   </div>
 
-  <!-- ═══ NHÓM 0: METADATA ═══ -->
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-icon red">📋</div><div><div class="stat-value" id="statSession">0</div><div class="stat-label">Đã nhập hôm nay</div></div></div>
+    <div class="stat-card"><div class="stat-icon green">📊</div><div><div class="stat-value" id="statHistory">—</div><div class="stat-label">Tổng lịch sử</div></div></div>
+    <div class="stat-card"><div class="stat-icon gold">🔥</div><div><div class="stat-value" id="statHot">0</div><div class="stat-label">Lead nóng (C3+)</div></div></div>
+  </div>
+
+  <!-- NHÓM 0 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag meta">META</span><span class="section-title">Nhóm 0 — Metadata</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -116,7 +144,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ NHÓM 1: DEMOGRAPHIC ═══ -->
+  <!-- NHÓM 1 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag demo">DEMO</span><span class="section-title">Nhóm 1 — Nhân khẩu học</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -128,7 +156,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ NHÓM 2: FIRMOGRAPHIC ═══ -->
+  <!-- NHÓM 2 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag firm">FIRM</span><span class="section-title">Nhóm 2 — Firmographic</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -140,7 +168,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ NHÓM 3: GEOGRAPHIC ═══ -->
+  <!-- NHÓM 3 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag geo">GEO</span><span class="section-title">Nhóm 3 — Địa lý</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -149,7 +177,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ NHÓM 4: KHÓA HỌC ═══ -->
+  <!-- NHÓM 4 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag course">COURSE</span><span class="section-title">Nhóm 4 — Khóa học quan tâm</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -165,7 +193,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ NHÓM 5: LEAD ═══ -->
+  <!-- NHÓM 5 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag lead">LEAD</span><span class="section-title">Nhóm 5 — Lead & Tình trạng</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -176,7 +204,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ NHÓM 6: NỖI ĐAU ═══ -->
+  <!-- NHÓM 6 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag pain">INSIGHT</span><span class="section-title">Nhóm 6 — Nỗi đau & Mục tiêu</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -185,7 +213,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ NHÓM 7: HÀNH ĐỘNG ═══ -->
+  <!-- NHÓM 7 -->
   <div class="form-section">
     <div class="section-header" onclick="toggleSection(this)"><span class="section-tag action">ACTION</span><span class="section-title">Nhóm 7 — Hành động & Follow-up</span><span class="section-chevron">▼</span></div>
     <div class="section-body">
@@ -195,16 +223,21 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
     </div>
   </div>
 
-  <!-- ═══ LỊCH SỬ BẢN GHI CỦA TÔI ═══ -->
+  <!-- LỊCH SỬ -->
   <div class="form-section">
-    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag history">MY DATA</span><span class="section-title">Lịch sử bản ghi của tôi</span><span class="section-chevron">▼</span></div>
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-tag history">MY DATA</span>
+      <span class="section-title">Danh sách khách hàng đã lưu</span>
+      <span class="section-badge" id="historyBadge">0</span>
+      <span class="section-chevron">▼</span>
+    </div>
     <div class="history-body" id="historyBody">
       <div class="history-toolbar">
         <input type="text" id="historySearch" placeholder="🔍 Tìm theo tên, SĐT, công ty..." oninput="filterHistory()">
         <span class="count" id="historyCount"></span>
-        <button class="btn btn-outline" style="color:var(--navy);border-color:var(--border);font-size:11px;padding:5px 12px" onclick="loadHistory()">↻ Tải lại</button>
+        <button class="btn btn-outline" style="color:var(--navy);border-color:var(--border);font-size:11px;padding:5px 12px" onclick="loadHistory()">↻ Tải lại từ hệ thống</button>
       </div>
-      <div id="historyContent"><div class="history-empty">Chọn tên Sale phụ trách ở Nhóm 0 để xem lịch sử.</div></div>
+      <div id="historyContent"><div class="history-empty">Chọn tên Sale ở Nhóm 0 để xem danh sách khách hàng đã lưu.</div></div>
     </div>
   </div>
 
@@ -214,22 +247,19 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--te
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 /* ╔═══════════════════════════════════════════════════════════╗
-   ║  CẤU HÌNH — CHIPI: Dán URL Apps Script vào đây          ║
-   ║  Sau đó upload file này lên GitHub.                      ║
-   ║  Nhân viên sẽ KHÔNG thấy và KHÔNG cần thao tác gì.      ║
+   ║  CHIPI: Dán URL Apps Script vào dòng dưới đây            ║
    ╚═══════════════════════════════════════════════════════════╝ */
-https://script.google.com/macros/s/AKfycbwjp0hF9UCSZifPHqQrl4CiW54IDBQuKL1XPCHwaRut4QGO9aQDLr2GB0DwdabtdD-s/exec
-/* Ví dụ: const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx.../exec"; */
-
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyac2vzeclz77DbphUpZ8STIvEHxBTOhBfakxpZ2H_74cxokf9DuiNJHqYRHxZ2k1Gg/exec";
 
 /* ═══ STATE ═══ */
 const LOCAL_RECORDS = [];
 let HISTORY_DATA = [];
+let CLOUD_DATA = [];
 
 const mienBac=['Hà Nội','Hải Phòng','Bắc Giang','Bắc Kạn','Bắc Ninh','Cao Bằng','Điện Biên','Hà Giang','Hà Nam','Hà Tĩnh','Hải Dương','Hòa Bình','Hưng Yên','Lai Châu','Lạng Sơn','Lào Cai','Nam Định','Nghệ An','Ninh Bình','Phú Thọ','Quảng Ninh','Sơn La','Thái Bình','Thái Nguyên','Thanh Hóa','Tuyên Quang','Vĩnh Phúc','Yên Bái'];
 const mienTrung=['Đà Nẵng','Bình Định','Bình Thuận','Đắk Lắk','Đắk Nông','Gia Lai','Khánh Hòa','Kon Tum','Lâm Đồng','Ninh Thuận','Phú Yên','Quảng Bình','Quảng Nam','Quảng Ngãi','Quảng Trị','Thừa Thiên Huế'];
 function getKhuVuc(t){if(!t)return'';if(mienBac.includes(t))return'Miền Bắc';if(mienTrung.includes(t))return'Miền Trung';return'Miền Nam'}
-function isConfigured(){return SCRIPT_URL && SCRIPT_URL.startsWith('https://script.google.com/')}
+function isOK(){return SCRIPT_URL&&SCRIPT_URL.startsWith('https://script.google.com/')}
 
 function nowStr(){const d=new Date();return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
 function genMaKH(){const d=new Date(),ds=d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');const n=LOCAL_RECORDS.filter(r=>r[1]&&r[1].includes(ds)).length+1;return'KH-'+ds+'-'+String(n).padStart(3,'0')}
@@ -240,17 +270,51 @@ function toggleSection(h){h.classList.toggle('collapsed');h.nextElementSibling.c
 document.querySelectorAll('.multi-check .check-tag').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('selected')));
 document.getElementById('f_tinh').addEventListener('change',function(){document.getElementById('f_khuVuc').value=getKhuVuc(this.value)});
 document.getElementById('f_khoaHoc').addEventListener('change',function(){document.getElementById('f_hocPhi').value=this.value?parseInt(this.value.split('|')[2]).toLocaleString('vi-VN')+' VNĐ':''});
-document.getElementById('f_sale').addEventListener('change',function(){localStorage.setItem('xld_sale',this.value);if(this.value)loadHistory();else document.getElementById('historyContent').innerHTML='<div class="history-empty">Chọn tên Sale để xem lịch sử.</div>'});
+document.getElementById('f_sale').addEventListener('change',function(){
+  localStorage.setItem('xld_sale',this.value);
+  if(this.value) loadHistory();
+  else{document.getElementById('historyContent').innerHTML='<div class="history-empty">Chọn tên Sale để xem danh sách.</div>';updateStats()}
+});
 
-function showToast(m,type='info'){const t=document.getElementById('toast');t.textContent=m;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),3000)}
-function initForm(){document.getElementById('f_datetime').value=nowStr();document.getElementById('f_maKH').value=genMaKH();const saved=localStorage.getItem('xld_sale');if(saved){document.getElementById('f_sale').value=saved;loadHistory()}}
-function resetForm(){document.querySelectorAll('.form-section input:not([readonly]),.form-section select:not(#f_sale),.form-section textarea').forEach(el=>{if(el.tagName==='SELECT')el.selectedIndex=0;else el.value=''});document.querySelectorAll('.check-tag.selected').forEach(t=>t.classList.remove('selected'));document.getElementById('f_khuVuc').value='';document.getElementById('f_hocPhi').value='';document.getElementById('f_datetime').value=nowStr();document.getElementById('f_maKH').value=genMaKH()}
-function updateStats(){document.getElementById('statTotal').textContent=LOCAL_RECORDS.length;document.getElementById('statHot').textContent=LOCAL_RECORDS.filter(r=>r[22]&&r[22].startsWith('C3')).length;document.getElementById('recordCount').textContent=LOCAL_RECORDS.length+' phiên này';document.getElementById('statCloud').textContent=isConfigured()?'✓':'✗'}
+function showToast(m,type='info'){const t=document.getElementById('toast');t.textContent=m;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),4000)}
 
-/* ═══ COLLECT ROW ═══ */
+function showSaveBanner(name, lead, khoa){
+  const b=document.getElementById('saveBanner');
+  document.getElementById('bannerTitle').textContent='✓ Đã lưu thành công — Bản ghi #'+LOCAL_RECORDS.length;
+  let detail='Khách hàng: '+name;
+  if(lead) detail+=' | Lead: '+lead;
+  if(khoa) detail+=' | Quan tâm: '+khoa;
+  document.getElementById('bannerDetail').textContent=detail;
+  b.classList.add('show');
+  setTimeout(()=>b.classList.remove('show'),8000);
+}
+
+function initForm(){
+  document.getElementById('f_datetime').value=nowStr();
+  document.getElementById('f_maKH').value=genMaKH();
+  const saved=localStorage.getItem('xld_sale');
+  if(saved){document.getElementById('f_sale').value=saved;loadHistory()}
+}
+function resetForm(){
+  document.querySelectorAll('.form-section input:not([readonly]),.form-section select:not(#f_sale),.form-section textarea').forEach(el=>{if(el.tagName==='SELECT')el.selectedIndex=0;else el.value=''});
+  document.querySelectorAll('.check-tag.selected').forEach(t=>t.classList.remove('selected'));
+  document.getElementById('f_khuVuc').value='';document.getElementById('f_hocPhi').value='';
+  document.getElementById('f_datetime').value=nowStr();document.getElementById('f_maKH').value=genMaKH();
+}
+
+function updateStats(){
+  document.getElementById('statSession').textContent=LOCAL_RECORDS.length;
+  document.getElementById('statHistory').textContent=HISTORY_DATA.length||'—';
+  document.getElementById('historyBadge').textContent=HISTORY_DATA.length;
+  // Count hot leads across all history
+  const hot=HISTORY_DATA.filter(r=>r.lead&&(r.lead.startsWith('C3')||r.lead.startsWith('C4'))).length;
+  document.getElementById('statHot').textContent=hot;
+}
+
+/* ═══ COLLECT ═══ */
 function collectRow(){
   const sale=document.getElementById('f_sale').value,nguon=document.getElementById('f_nguon').value,hoTen=document.getElementById('f_hoTen').value.trim(),lead=document.getElementById('f_lead').value;
-  if(!sale||!nguon||!hoTen||!lead){showToast('⚠ Điền đủ: Sale, Nguồn, Họ tên, Lead','error');return null}
+  if(!sale||!nguon||!hoTen||!lead){showToast('⚠ Điền đủ trường bắt buộc: Sale, Nguồn, Họ tên, Lead','error');return null}
   const cv=document.getElementById('f_khoaHoc').value;let maCD='',tenKH='',hp='';
   if(cv){const p=cv.split('|');maCD=p[0];tenKH=p[1];hp=p[2]}
   return[document.getElementById('f_datetime').value,document.getElementById('f_maKH').value,sale,nguon,document.getElementById('f_kenh').value,hoTen,document.getElementById('f_gioiTinh').value,document.getElementById('f_sdt').value.trim(),document.getElementById('f_email').value.trim(),document.getElementById('f_tuoi').value,document.getElementById('f_congTy').value.trim(),document.getElementById('f_chucVu').value,document.getElementById('f_nganh').value,document.getElementById('f_quyMo').value,document.getElementById('f_namTL').value,document.getElementById('f_tinh').value,document.getElementById('f_khuVuc').value,getMulti('f_chuoi'),maCD,tenKH,hp,document.getElementById('f_chinhSach').value,lead,document.getElementById('f_tiemNang').value,document.getElementById('f_tinhTrang').value,document.getElementById('f_lyDo').value,getMulti('f_noiDau'),getMulti('f_mucTieu'),document.getElementById('f_hanhDong').value,document.getElementById('f_ngayHen').value,document.getElementById('f_ghiChu').value];
@@ -259,42 +323,80 @@ function collectRow(){
 /* ═══ SAVE ═══ */
 async function saveRecord(){
   const row=collectRow();if(!row)return;
-  LOCAL_RECORDS.push(row);updateStats();
-  HISTORY_DATA.unshift({dt:row[0],ma:row[1],ten:row[5],gt:row[6],sdt:row[7],cty:row[10],nganh:row[12],chuoi:row[17],khoa:row[19],lead:row[22],tt:row[24],hd:row[28],hen:row[29],gc:row[30]});
-  renderHistory();
+  LOCAL_RECORDS.push(row);
+  // Add to history (top, marked as new)
+  const newEntry={dt:row[0],ma:row[1],ten:row[5],gt:row[6],sdt:row[7],cty:row[10],nganh:row[12],chuoi:row[17],khoa:row[19],lead:row[22],tt:row[24],hd:row[28],hen:row[29],gc:row[30],isNew:true};
+  HISTORY_DATA.unshift(newEntry);
+  updateStats();renderHistory();
+
+  // Show prominent success
+  showSaveBanner(row[5], row[22], row[19]);
+  showToast('✓ Lưu thành công: '+row[5],'success');
+
+  // Push to Google Sheets
   const btn=document.getElementById('btnSave');
-  if(isConfigured()){
+  if(isOK()){
     btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Đang gửi...';
-    try{await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({row:row})});showToast('✓ Đã lưu "'+row[5]+'" → Google Sheets','success')}
-    catch(e){showToast('⚠ Lưu local OK, gửi Sheets lỗi','error')}
+    try{await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({row:row})})}
+    catch(e){showToast('⚠ Đã lưu local, nhưng gửi hệ thống lỗi — sẽ thử lại sau','error')}
     btn.disabled=false;btn.innerHTML='✓ Lưu bản ghi';
-  }else{showToast('✓ Lưu local "'+row[5]+'" (chưa cấu hình Sheets)','info')}
+  }
   resetForm();
+  // Scroll to history
+  document.getElementById('historyBody').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-/* ═══ HISTORY: JSONP ═══ */
+/* ═══ HISTORY ═══ */
 function loadHistory(){
   const sale=document.getElementById('f_sale').value;
-  if(!sale||!isConfigured()){if(!isConfigured())document.getElementById('historyContent').innerHTML='<div class="history-empty">Chưa kết nối Google Sheets.</div>';return}
-  document.getElementById('historyContent').innerHTML='<div class="history-loading"><span class="spinner" style="border-color:var(--border);border-top-color:var(--navy)"></span> Đang tải...</div>';
+  if(!sale) return;
+  if(!isOK()){
+    // No cloud — show local only
+    if(HISTORY_DATA.length) renderHistory();
+    else document.getElementById('historyContent').innerHTML='<div class="history-empty">Chưa có bản ghi nào. Hãy nhập khách hàng đầu tiên!</div>';
+    updateStats();
+    return;
+  }
+  document.getElementById('historyContent').innerHTML='<div class="history-loading"><span class="spinner" style="border-color:var(--border);border-top-color:var(--navy)"></span> Đang tải dữ liệu từ hệ thống...</div>';
   const old=document.getElementById('jsonpScript');if(old)old.remove();
   const s=document.createElement('script');s.id='jsonpScript';
   s.src=SCRIPT_URL+'?action=fetch&sale='+encodeURIComponent(sale)+'&callback=xldCallback&_='+Date.now();
-  s.onerror=function(){document.getElementById('historyContent').innerHTML='<div class="history-empty">Lỗi kết nối.</div>'};
+  s.onerror=function(){
+    // On error, still show local data
+    if(HISTORY_DATA.length) renderHistory();
+    else document.getElementById('historyContent').innerHTML='<div class="history-empty">Lỗi kết nối hệ thống. Bản ghi local vẫn hiển thị bên dưới.</div>';
+  };
   document.body.appendChild(s);
 }
 window.xldCallback=function(res){
-  if(res.status==='ok'){HISTORY_DATA=res.data||[];renderHistory()}
-  else{document.getElementById('historyContent').innerHTML='<div class="history-empty">Lỗi: '+(res.msg||'')+' </div>'}
+  if(res.status==='ok'){
+    CLOUD_DATA=res.data||[];
+    // Merge: local new entries (not yet in cloud) + cloud data
+    const localNew=HISTORY_DATA.filter(r=>r.isNew);
+    // Deduplicate by maKH
+    const cloudMas=new Set(CLOUD_DATA.map(r=>r.ma));
+    const uniqueLocal=localNew.filter(r=>!cloudMas.has(r.ma));
+    HISTORY_DATA=[...uniqueLocal,...CLOUD_DATA];
+    updateStats();renderHistory();
+  }else{
+    if(HISTORY_DATA.length) renderHistory();
+    else document.getElementById('historyContent').innerHTML='<div class="history-empty">Lỗi: '+(res.msg||'')+'</div>';
+  }
 };
+
 function renderHistory(){
   const c=document.getElementById('historyContent');
-  if(!HISTORY_DATA.length){c.innerHTML='<div class="history-empty">Chưa có bản ghi nào.</div>';document.getElementById('historyCount').textContent='';return}
-  document.getElementById('historyCount').textContent=HISTORY_DATA.length+' bản ghi';
+  if(!HISTORY_DATA.length){c.innerHTML='<div class="history-empty">Chưa có bản ghi nào. Hãy nhập khách hàng đầu tiên!</div>';return}
   const q=(document.getElementById('historySearch').value||'').trim().toLowerCase();
-  const f=q?HISTORY_DATA.filter(r=>(r.ten||'').toLowerCase().includes(q)||(r.sdt||'').includes(q)||(r.cty||'').toLowerCase().includes(q)):HISTORY_DATA;
-  let h='<div class="htable-wrap"><table class="htable"><thead><tr><th>Ngày</th><th>Mã KH</th><th>Họ tên</th><th>SĐT</th><th>Công ty</th><th>Khóa học</th><th>Lead</th><th>Tình trạng</th><th>Hành động</th><th>Ghi chú</th></tr></thead><tbody>';
-  f.forEach(r=>{const lc=r.lead?'lead-'+r.lead.split(' ')[0]:'';h+='<tr><td>'+esc(r.dt)+'</td><td>'+esc(r.ma)+'</td><td><strong>'+esc(r.ten)+'</strong></td><td>'+esc(r.sdt)+'</td><td>'+esc(r.cty)+'</td><td>'+esc(r.khoa)+'</td><td><span class="lead-tag '+lc+'">'+esc(r.lead)+'</span></td><td>'+esc(r.tt)+'</td><td>'+esc(r.hd)+'</td><td>'+esc(r.gc)+'</td></tr>'});
+  const f=q?HISTORY_DATA.filter(r=>(r.ten||'').toLowerCase().includes(q)||(r.sdt||'').includes(q)||(r.cty||'').toLowerCase().includes(q)||(r.khoa||'').toLowerCase().includes(q)):HISTORY_DATA;
+  document.getElementById('historyCount').textContent='Hiển thị '+f.length+' / '+HISTORY_DATA.length+' bản ghi';
+
+  let h='<div class="htable-wrap"><table class="htable"><thead><tr><th style="width:70px">Ngày</th><th>Mã KH</th><th>Họ tên</th><th>SĐT</th><th>Công ty</th><th>Khóa học</th><th>Lead</th><th>Tình trạng</th><th>Hành động</th><th>Ghi chú</th></tr></thead><tbody>';
+  f.forEach((r,i)=>{
+    const lc=r.lead?'lead-'+r.lead.split(' ')[0]:'';
+    const cls=r.isNew?'new-row':'';
+    h+='<tr class="'+cls+'"><td>'+esc(r.dt)+'</td><td>'+esc(r.ma)+'</td><td><strong>'+esc(r.ten)+'</strong></td><td>'+esc(r.sdt)+'</td><td>'+esc(r.cty)+'</td><td>'+esc(r.khoa)+'</td><td><span class="lead-tag '+lc+'">'+esc(r.lead)+'</span></td><td>'+esc(r.tt)+'</td><td>'+esc(r.hd)+'</td><td>'+esc(r.gc)+'</td></tr>';
+  });
   h+='</tbody></table></div>';c.innerHTML=h;
 }
 function filterHistory(){renderHistory()}
@@ -302,12 +404,15 @@ function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/<
 
 /* ═══ EXPORT ═══ */
 function exportLocalExcel(){
-  if(!LOCAL_RECORDS.length){showToast('⚠ Chưa có bản ghi phiên này','error');return}
-  const H=['Ngày giờ','Mã KH','Sale','Nguồn','Kênh','Họ tên','Giới tính','SĐT','Email','Tuổi','Công ty','Chức vụ','Ngành','Quy mô','Năm TL','Tỉnh/TP','Khu vực','Chuỗi','Mã CĐ','Tên khóa','Học phí','CS Bán','Lead','Tiềm năng','Tình trạng','Lý do','Nỗi đau','Mục tiêu','Hành động','Ngày hẹn','Ghi chú'];
-  const ws=XLSX.utils.aoa_to_sheet([H,...LOCAL_RECORDS]);ws['!cols']=H.map((_,i)=>({wch:i===30?40:16}));
-  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Backup');
-  const d=new Date();XLSX.writeFile(wb,'XLD_Backup_'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'.xlsx');
-  showToast('✓ Đã xuất backup','success');
+  if(!HISTORY_DATA.length){showToast('⚠ Chưa có bản ghi nào để xuất','error');return}
+  const H=['Ngày giờ','Mã KH','Họ tên','Giới tính','SĐT','Công ty','Ngành','Chuỗi','Khóa học','Lead','Tình trạng','Hành động','Ngày hẹn','Ghi chú'];
+  const rows=HISTORY_DATA.map(r=>[r.dt,r.ma,r.ten,r.gt,r.sdt,r.cty,r.nganh,r.chuoi,r.khoa,r.lead,r.tt,r.hd,r.hen,r.gc]);
+  const ws=XLSX.utils.aoa_to_sheet([H,...rows]);ws['!cols']=H.map((_,i)=>({wch:i===13?40:18}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Khách hàng');
+  const sale=document.getElementById('f_sale').value||'Backup';
+  const d=new Date();
+  XLSX.writeFile(wb,'XLD_'+sale+'_'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'.xlsx');
+  showToast('✓ Đã xuất '+HISTORY_DATA.length+' bản ghi ra Excel','success');
 }
 
 /* ═══ INIT ═══ */
