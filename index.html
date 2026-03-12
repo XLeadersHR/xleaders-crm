@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XLeaders Academy — Nhập liệu khách hàng</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+:root{--red:#C22620;--gold:#D4AF37;--navy:#1B2A4A;--navy-light:#243556;--bg:#F4F5F7;--card:#FFF;--text:#1B2A4A;--text-light:#6B7280;--border:#E5E7EB;--success:#10B981}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.top-bar{background:linear-gradient(135deg,var(--navy),var(--navy-light));padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,42,74,.3)}
+.top-bar .logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px}
+.top-bar h1{color:#fff;font-size:15px;font-weight:600}
+.top-bar h1 span{color:var(--gold)}
+.top-bar .actions{display:flex;gap:8px;align-items:center}
+.records-count{font-size:11px;color:rgba(255,255,255,.6)}
+
+.btn{padding:8px 18px;border:none;border-radius:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-gold:hover:not(:disabled){background:#c9a432;transform:translateY(-1px)}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover:not(:disabled){background:#a82019;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.25)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+.container{max-width:960px;margin:0 auto;padding:20px 20px 60px}
+.stats-bar{display:flex;gap:10px;margin-bottom:18px}
+.stat-card{flex:1;background:var(--card);border-radius:10px;padding:11px 14px;border:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.stat-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.stat-icon.red{background:rgba(194,38,32,.1)}.stat-icon.gold{background:rgba(212,175,55,.1)}.stat-icon.navy{background:rgba(27,42,74,.1)}.stat-icon.green{background:rgba(16,185,129,.1)}
+.stat-value{font-size:19px;font-weight:700;color:var(--navy)}
+.stat-label{font-size:9px;color:var(--text-light);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+
+.form-section{background:var(--card);border-radius:12px;border:1px solid var(--border);margin-bottom:12px;overflow:hidden}
+.section-header{padding:11px 16px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;transition:background .15s}
+.section-header:hover{background:#F9FAFB}
+.section-tag{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#fff}
+.section-tag.meta{background:var(--navy)}.section-tag.demo{background:#3B82F6}.section-tag.firm{background:#8B5CF6}.section-tag.geo{background:#10B981}.section-tag.course{background:var(--red)}.section-tag.lead{background:var(--gold);color:var(--navy)}.section-tag.pain{background:#F97316}.section-tag.action{background:#06B6D4}.section-tag.history{background:#6366F1}
+.section-title{font-size:13px;font-weight:600;flex:1}
+.section-chevron{font-size:11px;color:var(--text-light);transition:transform .2s}
+.section-header.collapsed .section-chevron{transform:rotate(-90deg)}
+.section-body{padding:0 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:11px 16px}
+.section-body.collapsed{display:none}
+
+.field{display:flex;flex-direction:column;gap:4px}
+.field.full{grid-column:1/-1}
+.field label{font-size:11px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:4px}
+.field label .req{color:var(--red);font-size:13px}
+.field input,.field select,.field textarea{padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:inherit;font-size:12px;color:var(--text);background:#fff;transition:border-color .15s;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(27,42,74,.06)}
+.field textarea{resize:vertical;min-height:52px}
+.field input[readonly]{background:#F3F4F6;color:var(--text-light)}
+
+.multi-check{display:flex;flex-wrap:wrap;gap:5px}
+.check-tag{padding:4px 10px;border:1.5px solid var(--border);border-radius:18px;font-size:11px;cursor:pointer;transition:all .15s;user-select:none;background:#fff}
+.check-tag:hover{border-color:var(--navy)}
+.check-tag.selected{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.history-body{padding:0 16px 16px;display:block}
+.history-body.collapsed{display:none}
+.history-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.history-toolbar input{padding:6px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:11px;flex:1;min-width:180px;outline:none}
+.history-toolbar input:focus{border-color:var(--navy)}
+.history-toolbar .count{font-size:11px;color:var(--text-light)}
+.history-loading{text-align:center;padding:20px;color:var(--text-light);font-size:12px}
+.history-empty{text-align:center;padding:30px;color:var(--text-light);font-size:12px}
+
+.htable{width:100%;border-collapse:collapse;font-size:11px}
+.htable th{background:#F3F4F6;padding:7px 8px;text-align:left;font-weight:600;font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:.3px;position:sticky;top:0;border-bottom:2px solid var(--border)}
+.htable td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:top;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.htable tr:hover td{background:#F9FAFB}
+.htable .lead-tag{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600}
+.lead-C1{background:#DBEAFE;color:#1E40AF}.lead-C2{background:#FEF3C7;color:#92400E}.lead-C3{background:#D1FAE5;color:#065F46}.lead-C4{background:#FCE7F3;color:#9D174D}
+.htable-wrap{max-height:400px;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);padding:11px 22px;border-radius:10px;font-size:12px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:999;color:#fff}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--success)}.toast.error{background:var(--red)}.toast.info{background:var(--navy)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){.section-body{grid-template-columns:1fr}.stats-bar{flex-direction:column}.top-bar{padding:10px 14px;flex-wrap:wrap;gap:8px}.container{padding:14px 10px 40px}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo"><div class="logo-icon">XL</div><h1><span>XLeaders</span> — Nhập liệu khách hàng</h1></div>
+  <div class="actions">
+    <span class="records-count" id="recordCount"></span>
+    <button class="btn btn-outline" onclick="resetForm()">↻ Làm mới</button>
+    <button class="btn btn-gold" id="btnSave" onclick="saveRecord()">✓ Lưu bản ghi</button>
+    <button class="btn btn-red" onclick="exportLocalExcel()">⬇ Excel backup</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-icon red">📋</div><div><div class="stat-value" id="statTotal">0</div><div class="stat-label">Phiên này</div></div></div>
+    <div class="stat-card"><div class="stat-icon green">☁️</div><div><div class="stat-value" id="statCloud">✓</div><div class="stat-label">Google Sheets</div></div></div>
+    <div class="stat-card"><div class="stat-icon gold">🔥</div><div><div class="stat-value" id="statHot">0</div><div class="stat-label">Lead nóng</div></div></div>
+  </div>
+
+  <!-- ═══ NHÓM 0: METADATA ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag meta">META</span><span class="section-title">Nhóm 0 — Metadata</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field"><label>Ngày giờ nhập</label><input type="text" id="f_datetime" readonly></div>
+      <div class="field"><label>Mã khách hàng</label><input type="text" id="f_maKH" readonly></div>
+      <div class="field"><label>Tên Sale phụ trách <span class="req">*</span></label><select id="f_sale"><option value="">— Chọn —</option><option>Chi</option><option>Phương Anh</option><option>Oanh</option><option>Kiều</option><option>Lý</option><option>Nghĩa</option><option>Hương</option></select></div>
+      <div class="field"><label>Nguồn khách hàng <span class="req">*</span></label><select id="f_nguon"><option value="">— Chọn —</option><option>FB Ads</option><option>Inbox Facebook</option><option>Tiktok</option><option>Landing Page</option><option>Giới thiệu</option><option>Hotline</option><option>Chăm sóc chủ động</option><option>Chuyển đổi từ Alpha</option></select></div>
+      <div class="field"><label>Kênh chăm sóc</label><select id="f_kenh"><option value="">— Chọn —</option><option>Facebook</option><option>Zalo</option><option>ZOA</option><option>Tiktok</option></select></div>
+    </div>
+  </div>
+
+  <!-- ═══ NHÓM 1: DEMOGRAPHIC ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag demo">DEMO</span><span class="section-title">Nhóm 1 — Nhân khẩu học</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field"><label>Họ và tên <span class="req">*</span></label><input type="text" id="f_hoTen" placeholder="VD: Nguyễn Văn A"></div>
+      <div class="field"><label>Giới tính</label><select id="f_gioiTinh"><option value="">— Chọn —</option><option>Anh</option><option>Chị</option></select></div>
+      <div class="field"><label>Số điện thoại</label><input type="tel" id="f_sdt" placeholder="09xx xxx xxx"></div>
+      <div class="field"><label>Email</label><input type="email" id="f_email" placeholder="email@company.com"></div>
+      <div class="field"><label>Độ tuổi</label><select id="f_tuoi"><option value="">— Chọn —</option><option>25–30</option><option>31–35</option><option>36–40</option><option>41–45</option><option>&gt;45</option></select></div>
+    </div>
+  </div>
+
+  <!-- ═══ NHÓM 2: FIRMOGRAPHIC ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag firm">FIRM</span><span class="section-title">Nhóm 2 — Firmographic</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field"><label>Tên công ty</label><input type="text" id="f_congTy" placeholder="VD: Công ty ABC"></div>
+      <div class="field"><label>Chức vụ</label><select id="f_chucVu"><option value="">— Chọn —</option><option>CEO / Chủ doanh nghiệp</option><option>C-Level (COO, CFO, CHRO, CMO...)</option><option>Leader / Manager cấp cao</option><option>Trưởng phòng</option><option>Khác</option></select></div>
+      <div class="field"><label>Ngành nghề</label><select id="f_nganh"><option value="">— Chọn —</option><option>Thời trang</option><option>Mẹ &amp; bé</option><option>Siêu thị / Cửa hàng tiện lợi</option><option>Bất động sản / Dịch vụ BĐS</option><option>Dịch vụ tài chính</option><option>Bảo hiểm</option><option>Ngân hàng</option><option>Kinh doanh vàng</option><option>Dược phẩm / Y tế / CNSH</option><option>Chăm sóc sức khỏe</option><option>Làm đẹp / Thẩm mỹ viện</option><option>SX / KD mỹ phẩm</option><option>Dịch vụ tư vấn</option><option>Thương mại điện tử</option><option>CNTT / Phần mềm</option><option>Luật</option><option>Hạ tầng / Viễn thông</option><option>Điện tử / Thiết bị phụ trợ</option><option>Sản xuất phần cứng</option><option>Ô tô / Phụ tùng</option><option>Ẩm thực</option><option>Khách sạn / Nghỉ dưỡng / Giải trí</option><option>Du lịch / Hàng không</option><option>Vận tải / Hậu cần</option><option>Xây dựng / Vật liệu / Nội thất</option><option>An ninh / Bảo vệ</option><option>Trang sức, đá quý</option><option>Tập đoàn đa ngành</option><option>In ấn / Xuất bản</option><option>Truyền hình / Điện ảnh / Âm nhạc</option><option>Marketing / Truyền thông / QC</option><option>Kế toán / Kiểm toán</option><option>PR / Tổ chức sự kiện</option><option>SX chế biến thực phẩm</option><option>SX hóa chất</option><option>SX nhựa, bao bì</option><option>SX máy móc, cơ khí</option><option>SX nông/lâm/thủy sản</option><option>Sản xuất may mặc</option><option>Bán lẻ - FMCG</option><option>Phân phối / Bán lẻ</option><option>Giáo dục / Đào tạo</option></select></div>
+      <div class="field"><label>Quy mô nhân sự</label><select id="f_quyMo"><option value="">— Chọn —</option><option>Dưới 50</option><option>50 – 100</option><option>100 – 200</option><option>200 – 1.000</option><option>Trên 1.000</option></select></div>
+      <div class="field"><label>Năm thành lập DN</label><select id="f_namTL"><option value="">— Chọn —</option><option>Trước 2010</option><option>2010 – 2014</option><option>2015 – 2019</option><option>2020 – nay</option></select></div>
+    </div>
+  </div>
+
+  <!-- ═══ NHÓM 3: GEOGRAPHIC ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag geo">GEO</span><span class="section-title">Nhóm 3 — Địa lý</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field"><label>Tỉnh / Thành phố</label><select id="f_tinh"><option value="">— Chọn —</option><option>Hà Nội</option><option>TP. Hồ Chí Minh</option><option>Đà Nẵng</option><option>Hải Phòng</option><option>Cần Thơ</option><option>An Giang</option><option>Bà Rịa - Vũng Tàu</option><option>Bắc Giang</option><option>Bắc Kạn</option><option>Bạc Liêu</option><option>Bắc Ninh</option><option>Bến Tre</option><option>Bình Định</option><option>Bình Dương</option><option>Bình Phước</option><option>Bình Thuận</option><option>Cà Mau</option><option>Cao Bằng</option><option>Đắk Lắk</option><option>Đắk Nông</option><option>Điện Biên</option><option>Đồng Nai</option><option>Đồng Tháp</option><option>Gia Lai</option><option>Hà Giang</option><option>Hà Nam</option><option>Hà Tĩnh</option><option>Hải Dương</option><option>Hậu Giang</option><option>Hòa Bình</option><option>Hưng Yên</option><option>Khánh Hòa</option><option>Kiên Giang</option><option>Kon Tum</option><option>Lai Châu</option><option>Lâm Đồng</option><option>Lạng Sơn</option><option>Lào Cai</option><option>Long An</option><option>Nam Định</option><option>Nghệ An</option><option>Ninh Bình</option><option>Ninh Thuận</option><option>Phú Thọ</option><option>Phú Yên</option><option>Quảng Bình</option><option>Quảng Nam</option><option>Quảng Ngãi</option><option>Quảng Ninh</option><option>Quảng Trị</option><option>Sóc Trăng</option><option>Sơn La</option><option>Tây Ninh</option><option>Thái Bình</option><option>Thái Nguyên</option><option>Thanh Hóa</option><option>Thừa Thiên Huế</option><option>Tiền Giang</option><option>Trà Vinh</option><option>Tuyên Quang</option><option>Vĩnh Long</option><option>Vĩnh Phúc</option><option>Yên Bái</option></select></div>
+      <div class="field"><label>Khu vực</label><input type="text" id="f_khuVuc" readonly placeholder="Tự động gán"></div>
+    </div>
+  </div>
+
+  <!-- ═══ NHÓM 4: KHÓA HỌC ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag course">COURSE</span><span class="section-title">Nhóm 4 — Khóa học quan tâm</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field full"><label>Chuỗi quan tâm (chọn nhiều)</label><div class="multi-check" id="f_chuoi"><span class="check-tag" data-val="QTCL">QTCL — Quản trị Chiến lược</span><span class="check-tag" data-val="QTTC">QTTC — Quản trị Tài chính</span><span class="check-tag" data-val="QTNS">QTNS — Quản trị Nhân sự</span><span class="check-tag" data-val="LEAD">LEAD — Dẫn dắt Đội ngũ</span></div></div>
+      <div class="field full"><label>Khóa học cụ thể</label><select id="f_khoaHoc"><option value="">— Chọn khóa học —</option>
+        <optgroup label="QTCL — Quản trị Chiến lược (15tr)"><option value="QTCL.MTCV|Mô tả công việc CEO|15000000">MTCV — Mô tả công việc CEO</option><option value="QTCL.HDCL|Tư duy Hoạch định Chiến lược|15000000">HDCL — Tư duy Hoạch định Chiến lược</option><option value="QTCL.MHKD|Mô hình Kinh doanh &amp; VPC|15000000">MHKD — Mô hình Kinh doanh &amp; VPC</option><option value="QTCL.WKPI|Winning KPIs|15000000">WKPI — Winning KPIs</option><option value="QTCL.CTTC|KH Kinh doanh &amp; Công thức TC|15000000">CTTC — KH KD &amp; Công thức thành công</option><option value="QTCL.QTKH|Quản trị Kế hoạch|15000000">QTKH — Quản trị Kế hoạch</option><option value="QTCL.NLTD|Năng lực Tư duy NLĐ|15000000">NLTD — Năng lực Tư duy Nhà Lãnh đạo</option><option value="QTCL.TTTR|Train the Trainer|15000000">TTTR — CEO là Nhà Huấn luyện</option></optgroup>
+        <optgroup label="QTTC — Quản trị Tài chính (12tr)"><option value="QTTC.BCQT|Báo cáo Quản trị P&amp;L|12000000">BCQT — Báo cáo Quản trị P&amp;L</option><option value="QTTC.KHNS|Ngân sách hoạt động năm|12000000">KHNS — Ngân sách hoạt động năm</option><option value="QTTC.KSCP|Kiểm soát Chi phí DN|12000000">KSCP — Kiểm soát Chi phí</option><option value="QTTC.QTDT|Quản trị Dòng tiền|12000000">QTDT — Quản trị Dòng tiền</option><option value="QTTC.TCKT|Bộ máy TC-KT|12000000">TCKT — Bộ máy Tài chính Kế toán</option><option value="QTTC.THUE|Quản trị Thuế|12000000">THUE — Quản trị Thuế</option></optgroup>
+        <optgroup label="QTNS — Quản trị Nhân sự (12tr)"><option value="QTNS.CLNS|Chiến lược Nhân sự|12000000">CLNS — Chiến lược Nhân sự</option><option value="QTNS.SDTC|Sơ đồ Tổ chức|12000000">SDTC — Chuỗi Giá trị &amp; SĐTC</option><option value="QTNS.MTCV|MTCV &amp; Khung NL|12000000">MTCV — MTCV &amp; Khung Năng lực</option><option value="QTNS.CSDN|Đãi ngộ 3P|12000000">CSDN — Chính sách đãi ngộ 3P</option><option value="QTNS.THTD|TH Tuyển dụng|12000000">THTD — Thương hiệu Tuyển dụng</option><option value="QTNS.DTNB|Đào tạo nội bộ|12000000">ĐTNB — Đào tạo nội bộ</option><option value="QTNS.DNKC|Kế nhiệm|12000000">DNKC — Kế nhiệm &amp; Đội ngũ kế cận</option><option value="QTNS.VHDN|Văn hóa DN|12000000">VHDN — Văn hóa Doanh nghiệp</option><option value="QTNS.CNQT|Cẩm nang QT|12000000">CNQT — Cẩm nang Quản trị DN</option></optgroup>
+        <optgroup label="LEAD — Dẫn dắt Đội ngũ (12tr)"><option value="LEAD.HLKC|Coaching &amp; OJT|12000000">HLKC — Coaching &amp; OJT</option><option value="LEAD.NLGT|Giao tiếp NLĐ|12000000">NLGT — Năng lực Giao tiếp</option><option value="LEAD.PCCV|Phân công CV|12000000">PCCV — Phân công công việc</option><option value="LEAD.QTHS|Hiệu suất|12000000">QTHS — Quản trị Hiệu suất</option><option value="LEAD.XDDN|TC Hiệu suất cao|12000000">XDDN — Tổ chức Hiệu suất cao</option></optgroup>
+      </select></div>
+      <div class="field"><label>Học phí gốc</label><input type="text" id="f_hocPhi" readonly placeholder="Tự động"></div>
+      <div class="field"><label>Chính sách bán hàng</label><select id="f_chinhSach"><option value="">— Chọn —</option><option>Học bảo lưu</option><option>Khách mời</option><option>COMBO 02 (3%)</option><option>COMBO 05 (5%)</option><option>COMBO 12 (8%)</option><option>COMBO 21 (10%)</option><option>Member (10%)</option><option>Core 03 (12%)</option><option>Core 05 (15%)</option><option>Core 07 (20%)</option><option>Core 10 (25%)</option><option>Vé tặng</option></select></div>
+    </div>
+  </div>
+
+  <!-- ═══ NHÓM 5: LEAD ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag lead">LEAD</span><span class="section-title">Nhóm 5 — Lead & Tình trạng</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field"><label>Phân loại Lead <span class="req">*</span></label><select id="f_lead"><option value="">— Chọn —</option><option>C1 — Lead tiềm năng</option><option>C2 — Lead quan tâm</option><option>C3 — Đăng ký, chờ CK</option><option>C4 — Đã chuyển khoản</option><option>C41 — HP bổ sung</option><option>C42 — Khách mời / Vé tặng</option></select></div>
+      <div class="field"><label>Mức độ tiềm năng</label><select id="f_tiemNang"><option value="">— Chọn —</option><option>Nhóm Chủ động (95%)</option><option>Nhóm Chia sẻ nhiều (81%)</option><option>Nhóm Quan tâm (65%)</option><option>Nhóm Trung lập (35%)</option><option>Nhóm Thờ ơ</option></select></div>
+      <div class="field"><label>Tình trạng tư vấn</label><select id="f_tinhTrang"><option value="">— Chọn —</option><option>Không tiềm năng</option><option>Đang cân nhắc</option><option>Đăng ký</option><option>Hủy đăng ký</option><option>Chăm sóc KH</option></select></div>
+      <div class="field"><label>Phân loại lý do</label><select id="f_lyDo"><option value="">— Chọn —</option><option>Không tương tác</option><option>Spam / sai số</option><option>Không có nhu cầu</option><option>Cân nhắc nội dung</option><option>Cân nhắc học phí</option><option>Cân nhắc lịch học</option><option>Cân nhắc GV / tổ chức</option><option>Cần thời gian</option><option>Địa điểm xa</option><option>Chờ CK</option><option>Đã CK</option><option>Không sắp xếp thời gian</option><option>Học chỗ khác</option><option>Không còn nhu cầu</option><option>Chăm sóc KH</option></select></div>
+    </div>
+  </div>
+
+  <!-- ═══ NHÓM 6: NỖI ĐAU ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag pain">INSIGHT</span><span class="section-title">Nhóm 6 — Nỗi đau & Mục tiêu</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field full"><label>Nỗi đau / Thách thức (chọn nhiều)</label><div class="multi-check" id="f_noiDau"><span class="check-tag" data-val="Không rõ việc CEO cần làm">Không rõ việc CEO cần làm</span><span class="check-tag" data-val="Thiếu hệ thống quản trị">Thiếu hệ thống quản trị</span><span class="check-tag" data-val="Đội ngũ yếu">Đội ngũ yếu</span><span class="check-tag" data-val="Tài chính không kiểm soát">Tài chính không kiểm soát</span><span class="check-tag" data-val="Tăng trưởng đình trệ">Tăng trưởng đình trệ</span><span class="check-tag" data-val="Khủng hoảng / Rủi ro">Khủng hoảng / Rủi ro</span></div></div>
+      <div class="field full"><label>Mục tiêu tham gia (chọn nhiều)</label><div class="multi-check" id="f_mucTieu"><span class="check-tag" data-val="Học kiến thức mới">Học kiến thức mới</span><span class="check-tag" data-val="Xây dựng hệ thống">Xây dựng hệ thống</span><span class="check-tag" data-val="Kết nối CEO cùng tầm">Kết nối CEO cùng tầm</span><span class="check-tag" data-val="Giải quyết vấn đề cụ thể">Giải quyết vấn đề cụ thể</span><span class="check-tag" data-val="Phát triển bản thân">Phát triển bản thân</span><span class="check-tag" data-val="Scale up mô hình KD">Scale up mô hình KD</span></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ NHÓM 7: HÀNH ĐỘNG ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag action">ACTION</span><span class="section-title">Nhóm 7 — Hành động & Follow-up</span><span class="section-chevron">▼</span></div>
+    <div class="section-body">
+      <div class="field"><label>Hành động tiếp theo</label><select id="f_hanhDong"><option value="">— Chọn —</option><option>Gọi lại</option><option>Gửi tài liệu</option><option>Mời workshop</option><option>Chốt đăng ký</option><option>Theo dõi dài hạn</option></select></div>
+      <div class="field"><label>Ngày hẹn liên hệ</label><input type="date" id="f_ngayHen"></div>
+      <div class="field full"><label>Ghi chú tư vấn</label><textarea id="f_ghiChu" placeholder="Ghi chú nội dung trao đổi..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- ═══ LỊCH SỬ BẢN GHI CỦA TÔI ═══ -->
+  <div class="form-section">
+    <div class="section-header" onclick="toggleSection(this)"><span class="section-tag history">MY DATA</span><span class="section-title">Lịch sử bản ghi của tôi</span><span class="section-chevron">▼</span></div>
+    <div class="history-body" id="historyBody">
+      <div class="history-toolbar">
+        <input type="text" id="historySearch" placeholder="🔍 Tìm theo tên, SĐT, công ty..." oninput="filterHistory()">
+        <span class="count" id="historyCount"></span>
+        <button class="btn btn-outline" style="color:var(--navy);border-color:var(--border);font-size:11px;padding:5px 12px" onclick="loadHistory()">↻ Tải lại</button>
+      </div>
+      <div id="historyContent"><div class="history-empty">Chọn tên Sale phụ trách ở Nhóm 0 để xem lịch sử.</div></div>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* ╔═══════════════════════════════════════════════════════════╗
+   ║  CẤU HÌNH — CHIPI: Dán URL Apps Script vào đây          ║
+   ║  Sau đó upload file này lên GitHub.                      ║
+   ║  Nhân viên sẽ KHÔNG thấy và KHÔNG cần thao tác gì.      ║
+   ╚═══════════════════════════════════════════════════════════╝ */
+https://script.google.com/macros/s/AKfycbwjp0hF9UCSZifPHqQrl4CiW54IDBQuKL1XPCHwaRut4QGO9aQDLr2GB0DwdabtdD-s/exec
+/* Ví dụ: const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx.../exec"; */
+
+
+/* ═══ STATE ═══ */
+const LOCAL_RECORDS = [];
+let HISTORY_DATA = [];
+
+const mienBac=['Hà Nội','Hải Phòng','Bắc Giang','Bắc Kạn','Bắc Ninh','Cao Bằng','Điện Biên','Hà Giang','Hà Nam','Hà Tĩnh','Hải Dương','Hòa Bình','Hưng Yên','Lai Châu','Lạng Sơn','Lào Cai','Nam Định','Nghệ An','Ninh Bình','Phú Thọ','Quảng Ninh','Sơn La','Thái Bình','Thái Nguyên','Thanh Hóa','Tuyên Quang','Vĩnh Phúc','Yên Bái'];
+const mienTrung=['Đà Nẵng','Bình Định','Bình Thuận','Đắk Lắk','Đắk Nông','Gia Lai','Khánh Hòa','Kon Tum','Lâm Đồng','Ninh Thuận','Phú Yên','Quảng Bình','Quảng Nam','Quảng Ngãi','Quảng Trị','Thừa Thiên Huế'];
+function getKhuVuc(t){if(!t)return'';if(mienBac.includes(t))return'Miền Bắc';if(mienTrung.includes(t))return'Miền Trung';return'Miền Nam'}
+function isConfigured(){return SCRIPT_URL && SCRIPT_URL.startsWith('https://script.google.com/')}
+
+function nowStr(){const d=new Date();return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function genMaKH(){const d=new Date(),ds=d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');const n=LOCAL_RECORDS.filter(r=>r[1]&&r[1].includes(ds)).length+1;return'KH-'+ds+'-'+String(n).padStart(3,'0')}
+function getMulti(id){return[...document.querySelectorAll('#'+id+' .check-tag.selected')].map(t=>t.dataset.val).join('; ')}
+
+/* ═══ UI ═══ */
+function toggleSection(h){h.classList.toggle('collapsed');h.nextElementSibling.classList.toggle('collapsed')}
+document.querySelectorAll('.multi-check .check-tag').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('selected')));
+document.getElementById('f_tinh').addEventListener('change',function(){document.getElementById('f_khuVuc').value=getKhuVuc(this.value)});
+document.getElementById('f_khoaHoc').addEventListener('change',function(){document.getElementById('f_hocPhi').value=this.value?parseInt(this.value.split('|')[2]).toLocaleString('vi-VN')+' VNĐ':''});
+document.getElementById('f_sale').addEventListener('change',function(){localStorage.setItem('xld_sale',this.value);if(this.value)loadHistory();else document.getElementById('historyContent').innerHTML='<div class="history-empty">Chọn tên Sale để xem lịch sử.</div>'});
+
+function showToast(m,type='info'){const t=document.getElementById('toast');t.textContent=m;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),3000)}
+function initForm(){document.getElementById('f_datetime').value=nowStr();document.getElementById('f_maKH').value=genMaKH();const saved=localStorage.getItem('xld_sale');if(saved){document.getElementById('f_sale').value=saved;loadHistory()}}
+function resetForm(){document.querySelectorAll('.form-section input:not([readonly]),.form-section select:not(#f_sale),.form-section textarea').forEach(el=>{if(el.tagName==='SELECT')el.selectedIndex=0;else el.value=''});document.querySelectorAll('.check-tag.selected').forEach(t=>t.classList.remove('selected'));document.getElementById('f_khuVuc').value='';document.getElementById('f_hocPhi').value='';document.getElementById('f_datetime').value=nowStr();document.getElementById('f_maKH').value=genMaKH()}
+function updateStats(){document.getElementById('statTotal').textContent=LOCAL_RECORDS.length;document.getElementById('statHot').textContent=LOCAL_RECORDS.filter(r=>r[22]&&r[22].startsWith('C3')).length;document.getElementById('recordCount').textContent=LOCAL_RECORDS.length+' phiên này';document.getElementById('statCloud').textContent=isConfigured()?'✓':'✗'}
+
+/* ═══ COLLECT ROW ═══ */
+function collectRow(){
+  const sale=document.getElementById('f_sale').value,nguon=document.getElementById('f_nguon').value,hoTen=document.getElementById('f_hoTen').value.trim(),lead=document.getElementById('f_lead').value;
+  if(!sale||!nguon||!hoTen||!lead){showToast('⚠ Điền đủ: Sale, Nguồn, Họ tên, Lead','error');return null}
+  const cv=document.getElementById('f_khoaHoc').value;let maCD='',tenKH='',hp='';
+  if(cv){const p=cv.split('|');maCD=p[0];tenKH=p[1];hp=p[2]}
+  return[document.getElementById('f_datetime').value,document.getElementById('f_maKH').value,sale,nguon,document.getElementById('f_kenh').value,hoTen,document.getElementById('f_gioiTinh').value,document.getElementById('f_sdt').value.trim(),document.getElementById('f_email').value.trim(),document.getElementById('f_tuoi').value,document.getElementById('f_congTy').value.trim(),document.getElementById('f_chucVu').value,document.getElementById('f_nganh').value,document.getElementById('f_quyMo').value,document.getElementById('f_namTL').value,document.getElementById('f_tinh').value,document.getElementById('f_khuVuc').value,getMulti('f_chuoi'),maCD,tenKH,hp,document.getElementById('f_chinhSach').value,lead,document.getElementById('f_tiemNang').value,document.getElementById('f_tinhTrang').value,document.getElementById('f_lyDo').value,getMulti('f_noiDau'),getMulti('f_mucTieu'),document.getElementById('f_hanhDong').value,document.getElementById('f_ngayHen').value,document.getElementById('f_ghiChu').value];
+}
+
+/* ═══ SAVE ═══ */
+async function saveRecord(){
+  const row=collectRow();if(!row)return;
+  LOCAL_RECORDS.push(row);updateStats();
+  HISTORY_DATA.unshift({dt:row[0],ma:row[1],ten:row[5],gt:row[6],sdt:row[7],cty:row[10],nganh:row[12],chuoi:row[17],khoa:row[19],lead:row[22],tt:row[24],hd:row[28],hen:row[29],gc:row[30]});
+  renderHistory();
+  const btn=document.getElementById('btnSave');
+  if(isConfigured()){
+    btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Đang gửi...';
+    try{await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({row:row})});showToast('✓ Đã lưu "'+row[5]+'" → Google Sheets','success')}
+    catch(e){showToast('⚠ Lưu local OK, gửi Sheets lỗi','error')}
+    btn.disabled=false;btn.innerHTML='✓ Lưu bản ghi';
+  }else{showToast('✓ Lưu local "'+row[5]+'" (chưa cấu hình Sheets)','info')}
+  resetForm();
+}
+
+/* ═══ HISTORY: JSONP ═══ */
+function loadHistory(){
+  const sale=document.getElementById('f_sale').value;
+  if(!sale||!isConfigured()){if(!isConfigured())document.getElementById('historyContent').innerHTML='<div class="history-empty">Chưa kết nối Google Sheets.</div>';return}
+  document.getElementById('historyContent').innerHTML='<div class="history-loading"><span class="spinner" style="border-color:var(--border);border-top-color:var(--navy)"></span> Đang tải...</div>';
+  const old=document.getElementById('jsonpScript');if(old)old.remove();
+  const s=document.createElement('script');s.id='jsonpScript';
+  s.src=SCRIPT_URL+'?action=fetch&sale='+encodeURIComponent(sale)+'&callback=xldCallback&_='+Date.now();
+  s.onerror=function(){document.getElementById('historyContent').innerHTML='<div class="history-empty">Lỗi kết nối.</div>'};
+  document.body.appendChild(s);
+}
+window.xldCallback=function(res){
+  if(res.status==='ok'){HISTORY_DATA=res.data||[];renderHistory()}
+  else{document.getElementById('historyContent').innerHTML='<div class="history-empty">Lỗi: '+(res.msg||'')+' </div>'}
+};
+function renderHistory(){
+  const c=document.getElementById('historyContent');
+  if(!HISTORY_DATA.length){c.innerHTML='<div class="history-empty">Chưa có bản ghi nào.</div>';document.getElementById('historyCount').textContent='';return}
+  document.getElementById('historyCount').textContent=HISTORY_DATA.length+' bản ghi';
+  const q=(document.getElementById('historySearch').value||'').trim().toLowerCase();
+  const f=q?HISTORY_DATA.filter(r=>(r.ten||'').toLowerCase().includes(q)||(r.sdt||'').includes(q)||(r.cty||'').toLowerCase().includes(q)):HISTORY_DATA;
+  let h='<div class="htable-wrap"><table class="htable"><thead><tr><th>Ngày</th><th>Mã KH</th><th>Họ tên</th><th>SĐT</th><th>Công ty</th><th>Khóa học</th><th>Lead</th><th>Tình trạng</th><th>Hành động</th><th>Ghi chú</th></tr></thead><tbody>';
+  f.forEach(r=>{const lc=r.lead?'lead-'+r.lead.split(' ')[0]:'';h+='<tr><td>'+esc(r.dt)+'</td><td>'+esc(r.ma)+'</td><td><strong>'+esc(r.ten)+'</strong></td><td>'+esc(r.sdt)+'</td><td>'+esc(r.cty)+'</td><td>'+esc(r.khoa)+'</td><td><span class="lead-tag '+lc+'">'+esc(r.lead)+'</span></td><td>'+esc(r.tt)+'</td><td>'+esc(r.hd)+'</td><td>'+esc(r.gc)+'</td></tr>'});
+  h+='</tbody></table></div>';c.innerHTML=h;
+}
+function filterHistory(){renderHistory()}
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+/* ═══ EXPORT ═══ */
+function exportLocalExcel(){
+  if(!LOCAL_RECORDS.length){showToast('⚠ Chưa có bản ghi phiên này','error');return}
+  const H=['Ngày giờ','Mã KH','Sale','Nguồn','Kênh','Họ tên','Giới tính','SĐT','Email','Tuổi','Công ty','Chức vụ','Ngành','Quy mô','Năm TL','Tỉnh/TP','Khu vực','Chuỗi','Mã CĐ','Tên khóa','Học phí','CS Bán','Lead','Tiềm năng','Tình trạng','Lý do','Nỗi đau','Mục tiêu','Hành động','Ngày hẹn','Ghi chú'];
+  const ws=XLSX.utils.aoa_to_sheet([H,...LOCAL_RECORDS]);ws['!cols']=H.map((_,i)=>({wch:i===30?40:16}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Backup');
+  const d=new Date();XLSX.writeFile(wb,'XLD_Backup_'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'.xlsx');
+  showToast('✓ Đã xuất backup','success');
+}
+
+/* ═══ INIT ═══ */
+initForm();updateStats();
+</script>
+</body>
+</html>
